@@ -11,8 +11,6 @@ services:
       - backend
     environment:
       - NODE_ENV=development
-    volumes:
-      - ./frontend:/app
     networks:
       - app_network
     command: ["npm", "run", "dev"]
@@ -23,13 +21,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:3001"
-    depends_on:
-      - database
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgresql://user:password@database:5432/mydb
-    volumes:
-      - ./backend:/app
     networks:
       - app_network
     command: ["npm", "run", "start:dev"]
