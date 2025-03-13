@@ -7,14 +7,15 @@ import { AppService } from './app.service';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'db',
+      host: 'database',       // ✅修正済み
       port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'myapp',
-      entities: [],
+      username: 'user',       // ✅修正済み
+      password: 'password',
+      database: 'mydb',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    
   ],
   controllers: [AppController],
   providers: [AppService],
