@@ -23,6 +23,7 @@ services:
       - "3001:3001"
     environment:
       - NODE_ENV=development
+      - PORT=3001  # ← ここで環境変数に指定
       - DATABASE_URL=postgresql://user:password@database:5432/mydb
     networks:
       - app_network
