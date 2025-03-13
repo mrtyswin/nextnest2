@@ -7,7 +7,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/`);
+        const response = await axios.get(`http://localhost:3001/api`);
         setMessage(response.data.message);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-24">
       <h1 className="text-4xl font-bold mb-4">Next.js + NestJS Example</h1>
-      <p className="text-xl">Message from API: {message}</p>
+      <p className="text-xl">Mkkkessage from API: {message}</p>
     </div>
   );
 }

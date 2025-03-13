@@ -13,7 +13,10 @@ services:
       - NODE_ENV=development
     networks:
       - app_network
-    command: ["npm", "run", "dev"]
+    command: ["npx", "next", "dev"] 
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules      
 
   backend:
     build:
@@ -27,7 +30,7 @@ services:
       - DATABASE_URL=postgresql://user:password@database:5432/mydb
     networks:
       - app_network
-    command: ["npm", "run", "start:dev"]
+    command: ["npx", "nest", "start", "--watch"] 
     volumes:
       - ./backend:/app
 
