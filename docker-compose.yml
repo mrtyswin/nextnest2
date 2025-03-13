@@ -28,7 +28,7 @@ services:
       - app_network
     command: ["npm", "run", "start:dev"]
     volumes:
-      - ./backend:/app
+      - backend_data:/app  # ここを Named Volume に変更
 
   database:
     image: postgres:14
@@ -50,3 +50,4 @@ networks:
 
 volumes:
   pgdata:
+  backend_data:  # ここで Named Volume を定義
