@@ -1,0 +1,11 @@
+# node_modulesを除外
+node_modules/
+
+# Next.jsのビルドキャッシュ
+.next/
+
+# NestJSのビルドファイル
+dist/
+
+# 環境変数ファイル
+.env
