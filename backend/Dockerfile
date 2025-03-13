@@ -1,9 +1,9 @@
 FROM node:18-alpine
-WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm ci
+WORKDIR /app
 
 COPY . .
 
-CMD ["sh", "-c", "npm ci && npm run start:dev"]
+RUN npm ci
+
+CMD ["npm", "run", "start:dev"]

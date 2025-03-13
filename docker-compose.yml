@@ -28,7 +28,7 @@ services:
       - app_network
     command: ["npm", "run", "start:dev"]
     volumes:
-      - backend_data:/app  # ここを Named Volume に変更
+      - ./backend:/app
 
   database:
     image: postgres:14
