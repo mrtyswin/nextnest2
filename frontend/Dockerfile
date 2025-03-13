@@ -1,13 +1,11 @@
 FROM node:18-alpine
 WORKDIR /app
 
-# `package.json` を正しくコピー
+# 正しくコピー（contextが./frontendなので、ファイルはルートに存在する）
 COPY package.json package-lock.json ./
 
-# `node_modules` をインストール
 RUN npm ci
 
-# 残りのファイルをコピー
 COPY . .
 
 CMD ["npm", "run", "dev"]
