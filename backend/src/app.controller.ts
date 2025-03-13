@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('api') // ← ここに'api'を追加（localhost:3001/apiにマッピングされる）
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
