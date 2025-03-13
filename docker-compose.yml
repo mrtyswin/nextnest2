@@ -23,14 +23,14 @@ services:
       - "3001:3001"
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=postgresql://user:password@database:5432/mydb
+      - DATABASE_URL=postgresql://user:password@db:5432/mydb  # ←ここを database→db に修正
     networks:
       - app_network
     command: ["npm", "run", "start:dev"]
     volumes:
       - ./backend:/app
 
-  database:
+  db:
     image: postgres:14
     restart: always
     environment:
@@ -50,4 +50,4 @@ networks:
 
 volumes:
   pgdata:
-  backend_data:  # ここで Named Volume を定義
+  backend_data:
