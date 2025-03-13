@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   frontend:
@@ -7,14 +7,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/app:delegated
-      - /app/node_modules
     depends_on:
       - backend
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
+    volumes:
+      - ./frontend:/app
+    networks:
+      - app_network
+    command: ["npm", "run", "dev"]
 
   backend:
     build:
@@ -22,23 +23,34 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:3001"
-    volumes:
-      - ./backend:/app:delegated
-      - /app/node_modules
+    depends_on:
+      - database
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/myapp
+      - DATABASE_URL=postgresql://user:password@database:5432/mydb
+    volumes:
+      - ./backend:/app
+    networks:
+      - app_network
+    command: ["npm", "run", "start:dev"]
 
-  db:
+  database:
     image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=myapp
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
 
 volumes:
-  postgres_data:
+  pgdata:
