@@ -5,34 +5,33 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    command: ["npm", "run", "dev"]
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     environment:
       - NODE_ENV=development
     networks:
       - app_network
-    command: ["npx", "next", "dev"] 
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules      
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    command: ["npm", "run", "start:dev"]
     ports:
       - "3001:3001"
     environment:
       - NODE_ENV=development
-      - PORT=3001  # ← ここで環境変数に指定
+      - PORT=3001
       - DATABASE_URL=postgresql://user:password@database:5432/mydb
-    networks:
-      - app_network
-    command: ["npx", "nest", "start", "--watch"] 
     volumes:
       - ./backend:/app
+      - /app/node_modules
+    networks:
+      - app_network
 
   database:
     image: postgres:14
