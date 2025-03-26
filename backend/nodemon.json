@@ -1,5 +1,5 @@
 {
   "watch": ["src"],
-  "ext": "ts,json",
-  "exec": "nest start --watch"
+  "ext": "ts,js,json",
+  "exec": "ts-node --transpile-only -r tsconfig-paths/register src/main.ts"
 }

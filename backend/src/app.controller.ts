@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller() 
+@Controller('api')  // ✅ ここを追加！
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('api')
-  getHello(): { message: string } {
-    return this.appService.getHello();
+  @Get()
+  getHello(): { message: string } {  
+    return { message: this.appService.getHello() };  
   }
 }

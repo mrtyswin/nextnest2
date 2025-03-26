@@ -1,27 +1,14 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [message, setMessage] = useState('Loading...');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/api`);
-        setMessage(response.data.message);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setMessage('Error connecting to API');
-      }
-    };
-
-    fetchData();
+    fetch('/api')
+      .then(res => res.json())
+      .then(data => setMessage(data.message)) // ✅ message のみ取得
+      .catch(err => console.error('Error fetching data:', err));
   }, []);
 
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold mb-4">Next.js + NestJS Example</h1>
-      <p className="text-xl">ssskesあassあaaaasdfsage from API: {message}</p>
-    </div>
-  );
+  return <h1>Hello fsssrom aaa.js!</h1>;
 }
