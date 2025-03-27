@@ -10,5 +10,5 @@ export default function Home() {
       .catch(err => console.error('Error fetching data:', err));
   }, []);
 
-  return <h1>Hello fsssrom aaa.js!</h1>;
+  return <h1> fssjaaaaadsfsdfs!</h1>;
 }
