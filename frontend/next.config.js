@@ -1,16 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false, 
+  reactStrictMode: false,
   swcMinify: true,
   compiler: {
-    reactRemoveProperties: true,
+    reactRemoveProperties: false,
   },
-  webpackDevMiddleware: (config) => {
+  webpackDevMiddleware: config => {
     config.watchOptions = {
-      poll: 800,              // 0.8秒ごとにファイルの変更を監視
-      aggregateTimeout: 300,  // 変更検知後の待機時間
+      poll: 1000,
+      aggregateTimeout: 300,
     };
     return config;
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://backend:3001/api/:path*', // 🧠← ここが肝！
+      },
+    ];
   },
 };
 
