@@ -1,27 +1,26 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { Post } from './post.entity';
+import { PostService } from './post.service';
+import { PostController } from './post.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'database',  // ✅ これまで通り正しい
+      host: 'database', // ✅ 絶対にこれが正しい！
       port: 5432,
-      username: 'user',      // ✅ `docker-compose.yml` の `POSTGRES_USER` に合わせる
-      password: 'password',  // ✅ `docker-compose.yml` の `POSTGRES_PASSWORD` に合わせる
-      database: 'mydb',      // ✅ `docker-compose.yml` の `POSTGRES_DB` に合わせる
-      autoLoadEntities: true,
-      synchronize: true,  // ✅ 初回起動時にスキーマを作成
-    })
-    
+      username: 'user',
+      password: 'password',
+      database: 'mydb',
+      entities: [Post],
+      synchronize: false,
+    }),
+    TypeOrmModule.forFeature([Post]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, PostController],
+  providers: [AppService, PostService],
 })
 export class AppModule {}
