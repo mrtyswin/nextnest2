@@ -1,22 +1,4 @@
-version: '3.8'
-
 services:
-  frontend:
-    restart: always
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    command: ["npm", "run", "dev"]
-    ports:
-      - "3000:3000"
-    volumes:
-      - /app/node_modules
-      - ./frontend:/app
-    environment:
-      - NODE_ENV=development
-    networks:
-      - app_network
-
   backend:
     restart: always
     build:
@@ -25,10 +7,11 @@ services:
     command: ["npm", "run", "start:dev"]
     ports:
       - "3001:3001"
+    env_file: .env # ← ここを追加する（絶対必要）
     environment:
       - NODE_ENV=development
-      - PORT=3001
-      - DATABASE_URL=postgresql://user:password@database:5432/mydb
+      - PORT=${PORT:-3001} # こう書けば.envがないときも安全
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -38,10 +21,7 @@ services:
   database:
     image: postgres:14
     restart: always
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+    env_file: .env # ← ここも追加する（DBコンテナ側にも必要）
     ports:
       - "5432:5432"
     volumes:

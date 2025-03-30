@@ -1,3 +1,4 @@
+// envからユーザー名パスワード取ってくるように変更が必要
 import { DataSource } from 'typeorm';
 import { Post } from './src/post.entity'; 
 export const AppDataSource = new DataSource({
@@ -9,5 +10,5 @@ export const AppDataSource = new DataSource({
   database: 'mydb',
   entities: [Post], 
   migrations: ['src/migrations/*.ts'],
-  synchronize: false,
+  synchronize: true,
 });
